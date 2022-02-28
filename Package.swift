@@ -21,6 +21,7 @@ let package = Package(
             // Targets can depend on other targets in this package, and on products in packages this package depends on.
             .target(name: "Napi", dependencies: ["NapiC"]),
             .target(name: "NapiC", exclude: ["README.md"], publicHeadersPath: "include"),
+            .testTarget(name: "NapiTest", dependencies: ["Napi"], linkerSettings: [.unsafeFlags(["-Xlinker", "-undefined", "-Xlinker", "dynamic_lookup"])]),
             // Demo
             .target(name: "_Trampoline", dependencies: ["NapiC"], linkerSettings: [.unsafeFlags(["-Xlinker", "-undefined", "-Xlinker", "dynamic_lookup"])]),
             .target(name: "_Demo", dependencies: ["Napi", "_Trampoline"]),
