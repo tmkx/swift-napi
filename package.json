@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "build": "swift build -c release && mv ./.build/release/libdemo.dylib ./libdemo.node"
+  }
+}

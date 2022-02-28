@@ -9,6 +9,8 @@ let package = Package(
             // Products define the executables and libraries a package produces, and make them visible to other packages.
             .library(name: "Napi", type: .static, targets: ["Napi"]),
             .library(name: "NapiC", type: .static, targets: ["NapiC"]),
+            // Demo
+            .library(name: "demo", type: .dynamic, targets: ["Demo"]),
         ],
         dependencies: [
             // Dependencies declare other packages that this package depends on.
@@ -19,5 +21,8 @@ let package = Package(
             // Targets can depend on other targets in this package, and on products in packages this package depends on.
             .target(name: "Napi", dependencies: ["NapiC"]),
             .target(name: "NapiC", publicHeadersPath: "include"),
+            // Demo
+            .target(name: "Trampoline", dependencies: ["NapiC"], linkerSettings: [.unsafeFlags(["-Xlinker", "-undefined", "-Xlinker", "dynamic_lookup"])]),
+            .target(name: "Demo", dependencies: ["Napi", "Trampoline"]),
         ]
 )
