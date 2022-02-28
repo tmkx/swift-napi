@@ -10,7 +10,7 @@ let package = Package(
             .library(name: "Napi", type: .static, targets: ["Napi"]),
             .library(name: "NapiC", type: .static, targets: ["NapiC"]),
             // Demo
-            .library(name: "demo", type: .dynamic, targets: ["Demo"]),
+            .library(name: "demo", type: .dynamic, targets: ["_Demo"]),
         ],
         dependencies: [
             // Dependencies declare other packages that this package depends on.
@@ -22,7 +22,7 @@ let package = Package(
             .target(name: "Napi", dependencies: ["NapiC"]),
             .target(name: "NapiC", publicHeadersPath: "include"),
             // Demo
-            .target(name: "Trampoline", dependencies: ["NapiC"], linkerSettings: [.unsafeFlags(["-Xlinker", "-undefined", "-Xlinker", "dynamic_lookup"])]),
-            .target(name: "Demo", dependencies: ["Napi", "Trampoline"]),
+            .target(name: "_Trampoline", dependencies: ["NapiC"], linkerSettings: [.unsafeFlags(["-Xlinker", "-undefined", "-Xlinker", "dynamic_lookup"])]),
+            .target(name: "_Demo", dependencies: ["Napi", "_Trampoline"]),
         ]
 )
