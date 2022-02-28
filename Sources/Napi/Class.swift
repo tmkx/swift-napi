@@ -12,7 +12,7 @@ fileprivate func defineClass(_ env: napi_env, named name: String, _ constructor:
 
     let status = nameData.withUnsafeBytes { nameBytes in
         props.withUnsafeBufferPointer { propertiesBytes in
-            napi_define_class(env, nameBytes, nameData.count, swiftNAPICallback, dataPointer, properties.count, propertiesBytes.baseAddress, &result)
+            napi_define_class(env, nameBytes, nameData.count, swiftNapiCallback, dataPointer, properties.count, propertiesBytes.baseAddress, &result)
         }
     }
 

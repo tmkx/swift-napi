@@ -41,8 +41,7 @@ class CallbackData {
     }
 }
 
-@_cdecl("swift_napi_callback")
-func swiftNAPICallback(_ env: napi_env!, _ cbinfo: napi_callback_info!) -> napi_value? {
+func swiftNapiCallback(_ env: napi_env!, _ cbinfo: napi_callback_info!) -> napi_value? {
     var args = NullableArguments(nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 10, nil)
     let dataPointer = UnsafeMutablePointer<UnsafeMutableRawPointer?>.allocate(capacity: 1)
 

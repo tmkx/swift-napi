@@ -19,7 +19,7 @@ public struct PropertyDescriptor {
             let _name = try name.napiValue(env)
             let data = CallbackData(callback: callback)
             let dataPointer = Unmanaged.passRetained(data).toOpaque()
-            return napi_property_descriptor(utf8name: nil, name: _name, method: swiftNAPICallback, getter: nil, setter: nil, value: nil, attributes: attributes, data: dataPointer)
+            return napi_property_descriptor(utf8name: nil, name: _name, method: swiftNapiCallback, getter: nil, setter: nil, value: nil, attributes: attributes, data: dataPointer)
         case .value(let name, let value, let attributes):
             let _name = try name.napiValue(env)
             let _value = try value.napiValue(env)

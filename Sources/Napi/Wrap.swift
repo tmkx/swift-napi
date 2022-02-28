@@ -1,6 +1,5 @@
 import NapiC
 
-@_cdecl("swift_napi_deinit")
 func swiftNapiDeinit(_ env: napi_env!, pointer: UnsafeMutableRawPointer?, hint: UnsafeMutableRawPointer?) {
     Unmanaged<AnyObject>.fromOpaque(pointer!).release()
 }

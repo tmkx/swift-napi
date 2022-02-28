@@ -8,7 +8,7 @@ fileprivate func createFunction(_ env: napi_env, named name: String, _ function:
     let dataPointer = Unmanaged.passRetained(data).toOpaque()
 
     let status = nameData.withUnsafeBytes { nameBytes in
-        napi_create_function(env, nameBytes, nameData.count, swiftNAPICallback, dataPointer, &result)
+        napi_create_function(env, nameBytes, nameData.count, swiftNapiCallback, dataPointer, &result)
     }
 
     guard status == napi_ok else {
