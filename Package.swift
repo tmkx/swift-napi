@@ -20,7 +20,7 @@ let package = Package(
             // Targets are the basic building blocks of a package. A target can define a module or a test suite.
             // Targets can depend on other targets in this package, and on products in packages this package depends on.
             .target(name: "Napi", dependencies: ["NapiC"]),
-            .target(name: "NapiC", publicHeadersPath: "include"),
+            .target(name: "NapiC", exclude: ["README.md"], publicHeadersPath: "include"),
             // Demo
             .target(name: "_Trampoline", dependencies: ["NapiC"], linkerSettings: [.unsafeFlags(["-Xlinker", "-undefined", "-Xlinker", "dynamic_lookup"])]),
             .target(name: "_Demo", dependencies: ["Napi", "_Trampoline"]),

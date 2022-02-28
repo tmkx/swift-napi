@@ -22,7 +22,7 @@ extension Optional: ValueConvertible where Wrapped: ValueConvertible {
     }
 
     public func napiValue(_ env: napi_env) throws -> napi_value {
-        return try self?.napiValue(env) ?? Value.null.napiValue(env)
+        try self?.napiValue(env) ?? Value.null.napiValue(env)
     }
 }
 
