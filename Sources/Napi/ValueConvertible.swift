@@ -86,26 +86,21 @@ extension String: ValueConvertible {
             throw Napi.Error(status)
         }
 
-        var data = Data(count: length + 1)
-
-        status = data.withUnsafeMutableBytes {
-            napi_get_value_string_utf8(env, from, $0, length + 1, &length)
-        }
+        let pointer = UnsafeMutablePointer<CChar>.allocate(capacity: length + 1)
+        status = napi_get_value_string_utf8(env, from, pointer, length + 1, &length)
 
         guard status == napi_ok else {
             throw Napi.Error(status)
         }
 
-        self.init(data: data.dropLast(), encoding: .utf8)!
+        self.init(cString: pointer)
     }
 
     public func napiValue(_ env: napi_env) throws -> napi_value {
         var result: napi_value?
-        let data = self.data(using: .utf8)!
+        let bytes = cString(using: .utf8)!
 
-        let status = data.withUnsafeBytes { (bytes: UnsafePointer<Int8>) in
-            napi_create_string_utf8(env, bytes, data.count, &result)
-        }
+        let status = napi_create_string_utf8(env, bytes, bytes.count - 1, &result)
 
         guard status == napi_ok else {
             throw Napi.Error(status)

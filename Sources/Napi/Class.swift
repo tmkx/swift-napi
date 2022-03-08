@@ -2,7 +2,7 @@ import NapiC
 
 fileprivate func defineClass(_ env: napi_env, named name: String, _ constructor: @escaping Callback, _ properties: [PropertyDescriptor]) throws -> napi_value {
     var result: napi_value?
-    let nameData = name.data(using: .utf8)!
+    let nameCString = name.cString(using: .utf8)!
     let props = try properties.map {
         try $0.value(env)
     }
@@ -10,10 +10,8 @@ fileprivate func defineClass(_ env: napi_env, named name: String, _ constructor:
     let data = CallbackData(callback: constructor)
     let dataPointer = Unmanaged.passRetained(data).toOpaque()
 
-    let status = nameData.withUnsafeBytes { nameBytes in
-        props.withUnsafeBufferPointer { propertiesBytes in
-            napi_define_class(env, nameBytes, nameData.count, swiftNapiCallback, dataPointer, properties.count, propertiesBytes.baseAddress, &result)
-        }
+    let status = props.withUnsafeBufferPointer { propertiesBytes in
+        napi_define_class(env, nameCString, nameCString.count - 1, swiftNapiCallback, dataPointer, properties.count, propertiesBytes.baseAddress, &result)
     }
 
     guard status == napi_ok else {

@@ -2,14 +2,12 @@ import NapiC
 
 fileprivate func createFunction(_ env: napi_env, named name: String, _ function: @escaping Callback) throws -> napi_value {
     var result: napi_value?
-    let nameData = name.data(using: .utf8)!
+    let nameCString = name.cString(using: .utf8)!
 
     let data = CallbackData(callback: function)
     let dataPointer = Unmanaged.passRetained(data).toOpaque()
 
-    let status = nameData.withUnsafeBytes { nameBytes in
-        napi_create_function(env, nameBytes, nameData.count, swiftNapiCallback, dataPointer, &result)
-    }
+    let status = napi_create_function(env, nameCString, nameCString.count - 1, swiftNapiCallback, dataPointer, &result)
 
     guard status == napi_ok else {
         throw Napi.Error(status)
