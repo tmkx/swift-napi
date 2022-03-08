@@ -60,12 +60,12 @@ extension Array: ValueConvertible where Element: ValueConvertible {
         var status: napi_status!
         var result: napi_value!
 
-        status = napi_create_array_with_length(env, self.count, &result)
+        status = napi_create_array_with_length(env, count, &result)
         guard status == napi_ok else {
             throw Napi.Error(status)
         }
 
-        for (index, element) in self.enumerated() {
+        for (index, element) in enumerated() {
             status = napi_set_element(env, result, UInt32(index), try element.napiValue(env))
             guard status == napi_ok else {
                 throw Napi.Error(status)

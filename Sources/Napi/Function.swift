@@ -74,7 +74,7 @@ extension Function {
 /* call(...) */
 extension Function {
     fileprivate func _call(_ env: napi_env, this: napi_value, args: [napi_value?]) throws -> Void {
-        let handle = try self.napiValue(env)
+        let handle = try napiValue(env)
 
         let status = args.withUnsafeBufferPointer { argsBytes in
             napi_call_function(env, this, handle, args.count, argsBytes.baseAddress, nil)
@@ -86,7 +86,7 @@ extension Function {
     }
 
     fileprivate func _call<Result: ValueConvertible>(_ env: napi_env, this: napi_value, args: [napi_value?]) throws -> Result {
-        let handle = try self.napiValue(env)
+        let handle = try napiValue(env)
 
         var result: napi_value?
         let status = args.withUnsafeBufferPointer { argsBytes in

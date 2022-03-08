@@ -41,11 +41,11 @@ class CallbackData {
     }
 }
 
-func swiftNapiCallback(_ env: napi_env!, _ cbinfo: napi_callback_info!) -> napi_value? {
+func swiftNapiCallback(_ env: napi_env!, _ cbInfo: napi_callback_info!) -> napi_value? {
     var args = NullableArguments(nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 10, nil)
     let dataPointer = UnsafeMutablePointer<UnsafeMutableRawPointer?>.allocate(capacity: 1)
 
-    napi_get_cb_info(env, cbinfo, &args.length, &args.0, &args.this, dataPointer)
+    napi_get_cb_info(env, cbInfo, &args.length, &args.0, &args.this, dataPointer)
     let data = Unmanaged<CallbackData>.fromOpaque(dataPointer.pointee!).takeUnretainedValue()
 
     do {
