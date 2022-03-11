@@ -7,5 +7,7 @@
 xcuserdata/
 DerivedData/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+node_modules
 .pnpm-debug.log
 libdemo.node
+package-lock.json

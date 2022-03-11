@@ -1,5 +1,10 @@
 {
+  "type": "module",
   "scripts": {
-    "build": "swift build -c release && mv ./.build/release/libdemo.dylib ./libdemo.node"
+    "build": "swift build -c release && mv ./.build/release/libdemo.dylib ./libdemo.node",
+    "test": "ava"
+  },
+  "devDependencies": {
+    "ava": "^4.1.0"
   }
 }
